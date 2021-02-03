@@ -22,22 +22,22 @@ public class DomParser {
       Document document = builder.parse(ClassLoader.getSystemResourceAsStream("dblp-soc-papers.xml"));
       // Iterating through the nodes and extracting the data
       NodeList nodeList = document.getDocumentElement().getChildNodes();
-      List<Article>articleList = new ArrayList<Article>();
+      List<Publication> publicationList = new ArrayList<Publication>();
       for (int i = 0; i < nodeList.getLength(); i++) {
         Node node = nodeList.item(i);
         if (node instanceof Element) {
           // We have encountered an <inproceedings> or <article> tag
-          Article art = new Article();
+          Publication pub = new Publication();
           //initialize authors list.
-          art.authors = new ArrayList<String>();
+          pub.authors = new ArrayList<String>();
           //initialize editors list.
-          art.editors = new ArrayList<String>();
+          pub.editors = new ArrayList<String>();
           //initialize ee list.
-          art.ee = new ArrayList<String>();
+          pub.ee = new ArrayList<String>();
           //initialize and define mdate value
-          art.mdate = node.getAttributes().getNamedItem("mdate").getNodeValue();
+          pub.mdate = node.getAttributes().getNamedItem("mdate").getNodeValue();
           //initialize and define key value
-          art.key = node.getAttributes().getNamedItem("key").getNodeValue();
+          pub.key = node.getAttributes().getNamedItem("key").getNodeValue();
           NodeList childNodes = node.getChildNodes();
           for (int j = 0; j < childNodes.getLength(); j++) {
             Node cNode = childNodes.item(j);
@@ -46,58 +46,58 @@ public class DomParser {
               String content = cNode.getLastChild().getTextContent().trim();
               switch (cNode.getNodeName()) {
                 case "author":
-                  art.authors.add(content);
+                  pub.authors.add(content);
                   break;
                 case "editor":
-                  art.editors.add(content);
+                  pub.editors.add(content);
                   break;
                 case "publisher":
-                  art.publisher = content;
+                  pub.publisher = content;
                   break;
                 case "title":
-                  art.title = content;
+                  pub.title = content;
                   break;
                 case "series":
-                  art.series =content;
+                  pub.series =content;
                   break;
                 case "journal":
-                  art.journal = content;
+                  pub.journal = content;
                   break;
                 case "number":
-                  art.number = Integer.parseInt(content);
+                  pub.number = Integer.parseInt(content);
                   break;
                 case "volume":
-                  art.volume = Integer.parseInt(content);
+                  pub.volume = Integer.parseInt(content);
                   break;
                 case "pages":
-                  art.pages = content;
+                  pub.pages = content;
                   break;
                 case "year":
-                  art.year = Integer.parseInt(content);
+                  pub.year = Integer.parseInt(content);
                   break;
                 case "crossref":
-                  art.cross_ref = content;
+                  pub.cross_ref = content;
                   break;
                 case "booktitle":
-                  art.book_title = content;
+                  pub.book_title = content;
                   break;
                 case "ee":
-                  art.ee.add(content);
+                  pub.ee.add(content);
                   break;
                 case "isbn":
-                  art.isbn = content;
+                  pub.isbn = content;
                   break;
                 case "url":
-                  art.url = content;
+                  pub.url = content;
                   break;
               }
             }
           }
-          articleList.add(art);
+          publicationList.add(pub);
         }
       }
       // Print the Article list
-      for (Article e : articleList) {
+      for (Publication e : publicationList) {
         System.out.println(e);
       }
     } catch (Exception e) {

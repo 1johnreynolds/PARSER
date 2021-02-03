@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class Article {
+public class Publication {
     String mdate;
     String key;
     List<String> authors;
